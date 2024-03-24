@@ -51,5 +51,6 @@ def send_email_confirmation(reservation_id,reservation_name,reservation_date,res
     server.starttls()
     server.login(USERNAME, PASSWORD)
     server.sendmail(sender, email, msg.as_string())
+    server.sendmail(sender, st.secrets.restaurantnuances.email, msg.as_string())
     server.close()
 

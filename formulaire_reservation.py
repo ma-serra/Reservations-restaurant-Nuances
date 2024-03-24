@@ -32,7 +32,7 @@ st.write(":red[*]Champs obligatoires")
 st.write('<style>div.row-widget.stRadio > div {flex-direction:row;}</style>', unsafe_allow_html=True)
 lunch_or_dinner = st.radio("Pour quel service souhaitez-vous faire une réservation, midi ou soir?:red[*]", ["Midi", "Soir"])
 
-head_count = st.number_input("Pour combien de personnes souhaitez-vous réserver?:red[*]", min_value=1, max_value=20)
+head_count = st.number_input("Pour combien de personnes souhaitez-vous réserver?:red[*]", min_value=1, max_value=6)
 
 date_and_time = datetime.datetime.today()
 if date_and_time.weekday() in range(0,4) and ((date_and_time.hour==13 and date_and_time.minute>30) or date_and_time.hour>13):
