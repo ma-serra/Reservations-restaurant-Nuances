@@ -2,7 +2,7 @@ import streamlit as st
 import datetime
 import dateutil.relativedelta
 import locale
-locale.setlocale(locale.LC_TIME, "fr_FR")
+locale.setlocale(locale.LC_ALL, "fr_FR")
 import data_validation as dv
 import controler as ctr
 from streamlit_js_eval import streamlit_js_eval
