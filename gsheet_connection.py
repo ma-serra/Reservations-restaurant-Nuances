@@ -150,6 +150,7 @@ def delete_reservation(reservation_id,reservation_date,lunch_or_dinner,head_coun
           )
           .execute()
       )
+      update_disponibilities(reservation_date,lunch_or_dinner,head_count,False)
     except HttpError as error:
         return error
   
