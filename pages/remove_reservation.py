@@ -56,6 +56,6 @@ else:
         st.write("Confirmez-vous l'annulation de la réservation:")
         col_yes, col_no = st.columns([.5,1])
         with col_yes:
-            st.button("Oui",on_click=gsc.delete_reservation,args=(reservation_id,reservation_date,reservation_detail["Service"].values[0],reservation_detail["Nombre de personnes"].values[0]))
+            st.button("Oui",on_click=gsc.delete_reservation,args=(reservation_id,reservation_date,reservation_detail["Service"].values[0],int(reservation_detail["Nombre de personnes"].values[0])))
         with col_no:
             st.button("Non",on_click=change_deletion_state,args=(False,))
