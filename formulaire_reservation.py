@@ -82,7 +82,7 @@ if st.session_state.is_phone_number_completed==False:
 
 comments = st.text_input("Commentaires:")
 
-st.button("Réserver",on_click=ctr.send_user_reservation_to_gsheet,args=(reservation_name,lunch_or_dinner,reservation_date,hours,minutes,head_count,email,phone_number,comments))
+st.button("Réserver",on_click=ctr.send_user_reservation_to_gsheet,args=(reservation_name,lunch_or_dinner,reservation_date,hours,minutes,head_count,email,phone_number,comments), disabled=phone_number=="")
 
 if st.session_state.is_reservation_completed==True:
     streamlit_js_eval(js_expressions="parent.window.location.reload()")

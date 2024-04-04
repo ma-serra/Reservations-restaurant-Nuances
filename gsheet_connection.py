@@ -8,6 +8,9 @@ import pandas as pd
 from datetime import datetime
 import streamlit as st
 
+from email.message import EmailMessage
+from smtplib import SMTP
+
 # If modifying these scopes, delete the file token.json.
 # SCOPES = st.secrets.gsheet_connection.scopes
 # The ID and range of a sample spreadsheet.
@@ -129,7 +132,7 @@ def set_reservation(reservation_id,reservation_name,lunch_or_dinner,reservation_
     except HttpError as error:
         return False
     
-def delete_reservation(reservation_id,reservation_date,lunch_or_dinner,head_count):
+def delete_reservation(reservation_id,reservation_name,email,phone,reservation_date,lunch_or_dinner,head_count):
     reservations = get_reservations()
     reservation_to_update = reservations[reservations["Id"]==reservation_id]
 
@@ -151,6 +154,33 @@ def delete_reservation(reservation_id,reservation_date,lunch_or_dinner,head_coun
           .execute()
       )
       update_disponibilities(reservation_date,lunch_or_dinner,head_count,False)
+
+      subject = "Nuances : Annulation d'une réservation"
+    
+      sender = st.secrets.email_credentials.email_username
+      USERNAME = st.secrets.email_credentials.email_username
+      PASSWORD = st.secrets.email_credentials.email_password
+
+      msg = EmailMessage()
+      msg.set_type('text/plain')
+      msg['Subject'] = subject
+  
+      msg.set_content(f"""
+                      Annulation de la réservation suivante : \r
+                      * Date: {reservation_date} \r
+                      * Nombre de personnes: {head_count} \r
+                      * Nom: {reservation_name} \r
+                      * Email: {email} \r
+                      * Téléphone: {phone}
+                      """)
+          
+      server = SMTP("smtp.gmail.com", 587)
+      server.ehlo()
+      server.starttls()
+      server.login(USERNAME, PASSWORD)
+      server.sendmail(sender, st.secrets.restaurantnuances.email, msg.as_string())
+      server.close()
+
     except HttpError as error:
         return error
   
